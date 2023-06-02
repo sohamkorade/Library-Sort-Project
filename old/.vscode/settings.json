@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"iomanip": "cpp",
+		"fstream": "cpp",
+		"iostream": "cpp"
+	}
+}

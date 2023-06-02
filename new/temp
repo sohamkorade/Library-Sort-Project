@@ -1,0 +1,68 @@
+ll binarySearch(vector<ll>& S, ll n, ll k) {
+  int m1, m2;
+  ll low = 0;
+  ll high = n - 1;
+  while (low < high) {
+    ll mid = (low + high) / 2;
+    if (S[mid] == -1) {
+      m1 = m2 = mid;
+      while (S[m1] == -1 && m1 >= low) m1 = m1 - 1;
+      while (S[m2] == -1 && m2 <= high) m2 = m2 + 1;
+      if (m1 < 0 && m2 >= high + 1) low = high = m1 + 1;
+      if (m1 == 0 && m2 >= high + 1) {
+        if (k < S[m1])
+          low = high = m1;
+        else
+          low = high = m1 + 1;
+      }
+      if (m1 > 0 && m2 >= high + 1) {
+        if (k >= S[m1])
+          high = m1 + 1;
+        else
+          high = m1 - 1;
+      }
+      if (m1 > 0 && m2 < high + 1) {
+        if (k <= S[m1])
+          if (k == S[m2])
+            low = high = m1;
+          else
+            high = m1 - 1;
+      }
+      if (k > S[m1] && k < S[m2]) {
+        low = m1 + 1;
+        high = m2 - 1;
+      }
+      if (k >= S[m2]) {
+        if (m2 < high)
+          low = m2 + 1;
+        else
+          low = m2;
+      }
+      if (m1 == 0 && m2 <= high) {
+        if (k <= S[m1]) high = m1;
+      }
+      if (k > S[m1] && k < S[m2]) {
+        low = m1 + 1;
+        high = m2 - 1;
+      }
+      if (k >= S[m2]) {
+        if (m2 <= high)
+          low = m2 + 1;
+        else
+          low = m2;
+      }
+    } else {
+      if (S[mid] < k) low = mid + 1;
+      if (S[mid] > k) high = mid - 1;
+      if (S[mid] == k) return mid;
+    }
+    if (low == high) {
+      if (S[low] < k) {
+        low++;
+        high++;
+      }
+      return low;
+    }
+  }
+  return low;
+}
